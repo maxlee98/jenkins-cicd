@@ -77,11 +77,36 @@ sudo systemctl status jenkins
 
 ```
 
+### Get Jenkins default password
+
+`sudo cat /var/lib/jenkins/secrets/initialAdminPassword`
+
 ### Verifying Jenkins
 
 1. Add the security inbound rule to allow All TCP IPV4 and All TCP IPV6
 2. Once saved, give it some time to load, go to the Public IPV4 Address of EC2 and check the port 8080 if the Jenkin service is running
    `54.210.195.95:8080`
+
+3. Login to Jenkins:
+   user = `admin`
+   pass = `f46a7d85b02f465e9ed6a769e664f4b0`
+
+### Plugins for Jenkins
+
+1. Get the password from bash when you attempt to access the Public IPV4 address
+2. Setup the plugins, enable the JUnit, Github and Email Templates
+3. Skip and use admin
+
+### Linking to Github
+
+1. Manage Jenkins > Credentials > System > Global Credentials (Unrestricted)
+2. Kind = Secret Text, Secret = `[Github Generated Key]`
+3. Once confirmed / created profile > go back to Github Repository and click onto Repository Settings > Go to Webhooks, Add Webhook
+4. Payload URL = `http://54.210.195.95:8080/github-webhook/`, Content Type = `application/json`
+5. Go back to Jenkins Page > Manage Jenkins > System > Scroll down to `Github` > Add Server > Name = `jenkins` , credentials = `jenkins` (newly created) > Test Connection
+
+6. If you have created a jenkins project, need to configure the settings to use `Git` for source code management. Add the repository URL : `https://github.com/maxlee98/jenkins-cicd`
+7. Edit which branch to use, by default = `master` but some use `main` change to whichever you are using
 
 ## Installing Docker
 
